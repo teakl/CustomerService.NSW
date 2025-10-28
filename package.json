@@ -1,0 +1,21 @@
+{
+  "name": "customerservice.nsw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cucumber-js --format @cucumber/pretty-formatter",
+    "api": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@api'"
+  },
+  "keywords": [],
+  "author": "Teak Ly",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.2",
+    "cucumber-html-reporter": "^7.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "types": ["@playwright/test", "@cucumber/cucumber"]
+  },
+  "include": ["features/**/*.ts", "tests/steps/**/*.ts", "**/*.ts"],
+  "exclude": ["dist", "node_modules"]
+}

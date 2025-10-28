@@ -1,0 +1,40 @@
+name: Playwright BDD Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main, "feature/**"]
+
+jobs:
+  playwright-bdd:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright BDD tests
+        id: run-tests
+        run: npx cucumber-js --require-module ts-node/register --require steps/**/*.ts --format html:./reports/cucumber-report.html
+        continue-on-error: true
+      - name: Upload HTML report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: my-html-report
+          path: |
+            reports/cucumber-report.html
+      - name: Fail the workflow if tests failed
+        if: steps.run-tests.outcome == 'failure'
+        run: exit 1
+      - name: Display Cucumber HTML report in summary
+        if: always()
+        run: |
+          echo "### 🧪 Cucumber HTML Report" >> $GITHUB_STEP_SUMMARY
+          echo "[Click here to download and view the HTML report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts)" >> $GITHUB_STEP_SUMMARY
