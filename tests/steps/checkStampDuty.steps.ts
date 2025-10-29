@@ -5,24 +5,8 @@ import { ServiceNswPage } from "../../pages/serviceNswPage";
 import { RevenueNswCalculatorsPage } from "../../pages/revenueNswCalculatorsPage";
 import { page } from "../../support/hooks";
 
-setDefaultTimeout(30 * 1000);
-
-// let browser: Browser;
-// let page: Page;
 let serviceNswPage: ServiceNswPage;
 let revenuePage: RevenueNswCalculatorsPage;
-
-// Before(async () => {
-//   browser = await chromium.launch({ headless: true }); // show browser
-//   const context = await browser.newContext();
-//   page = await context.newPage();
-//   serviceNswPage = new ServiceNswPage(page);
-//   revenuePage = new RevenueNswCalculatorsPage(page);
-// });
-
-// After(async () => {
-//   await browser.close();
-// });
 
 Given("I open the Service NSW motor vehicle stamp duty page", async () => {
   serviceNswPage = new ServiceNswPage(page);
@@ -55,8 +39,22 @@ When("I enter {string} as the vehicle price", async (price: string) => {
 });
 
 Then(
-  "I should see the popup window showing {string}",
+  "I should see the popup window showing duty payable {string}",
   async (expectedText: string) => {
-    await revenuePage.verifyPopupContains(expectedText);
+    await revenuePage.verifyPopupContainsStampDuty(expectedText);
+  }
+);
+
+Then(
+  "I should see the popup window showing purchase price or value {string}",
+  async (expectedText: string) => {
+    await revenuePage.verifyPopupContainsPurchasePrice(expectedText);
+  }
+);
+
+Then(
+  "I should see the popup window passenger vehicle? {string}",
+  async (expectedText: string) => {
+    await revenuePage.verifyPopupContainsPassengerVehicle(expectedText);
   }
 );
