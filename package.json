@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cucumber-js --format @cucumber/pretty-formatter",
-    "api": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@api'"
+    "api": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@api'",
+    "stampDuty": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@stampDuty'"
   },
   "keywords": [],
   "author": "Teak Ly",

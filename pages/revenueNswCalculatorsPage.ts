@@ -7,6 +7,7 @@ export class RevenueNswCalculatorsPage {
   readonly purchasePriceOrValue: Locator;
   readonly calculateButton: Locator;
   readonly calculateModalWindow: Locator;
+  readonly revenuPanelBody: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,68 +18,47 @@ export class RevenueNswCalculatorsPage {
       hasText: "Calculate",
     });
     this.calculateModalWindow = page.locator(".modal-body");
+    this.revenuPanelBody = page.locator(
+      ".panel-collapse.readmore.collapse.show"
+    );
   }
 
   async verifyCalculatorPage() {
     await expect(this.page).toHaveURL(/revenue\.nsw\.gov\.au/);
+    await expect(this.revenuPanelBody).toBeVisible();
   }
 
   async enterDetailsAndCalculate(amount: string) {
     await this.passengerYesRadio.check();
     await this.purchasePriceOrValue.fill(amount);
     await this.calculateButton.click();
-    await this.page.waitForSelector(".modal-body", {
-      state: "visible",
-      timeout: 5000,
-    });
+    await expect(this.calculateModalWindow).toBeVisible({ timeout: 5000 });
   }
 
   async verifyPopupContainsStampDuty(text: string) {
-    try {
-      const modalRow = this.calculateModalWindow.locator("tr", {
-        hasText: "Duty payable",
-      });
+    const modalRow = this.calculateModalWindow.locator("tr", {
+      hasText: "Duty payable",
+    });
 
-      //wait for modal row to appear
-      await modalRow.waitFor({ state: "visible", timeout: 5000 });
-      await expect(modalRow).toContainText(text);
-    } catch (error) {
-      console.warn(
-        "Calculation popup not found, skipping duty verification",
-        error
-      );
-    }
+    await modalRow.waitFor({ state: "visible", timeout: 5000 });
+    await expect(modalRow).toContainText(text);
   }
 
   async verifyPopupContainsPurchasePrice(text: string) {
-    try {
-      const modalPurchaseRow = this.calculateModalWindow.locator("tr", {
-        hasText: "Purchase price or value",
-      });
+    const modalPurchaseRow = this.calculateModalWindow.locator("tr", {
+      hasText: "Purchase price or value",
+    });
 
-      await modalPurchaseRow.waitFor({ state: "visible", timeout: 5000 });
-      await expect(modalPurchaseRow).toContainText(text);
-    } catch (error) {
-      console.warn(
-        "Calculation popup not found, skipping purchase price or value verification",
-        error
-      );
-    }
+    await modalPurchaseRow.waitFor({ state: "visible", timeout: 5000 });
+    await expect(modalPurchaseRow).toContainText(text);
   }
 
   async verifyPopupContainsPassengerVehicle(text: string) {
-    try {
-      const modalVehicleRow = this.calculateModalWindow.locator("tr", {
-        hasText: "Is this registration for a passenger vehicle?",
-      });
+    const modalVehicleRow = this.calculateModalWindow.locator("tr", {
+      hasText: "Is this registration for a passenger vehicle?",
+    });
 
-      await modalVehicleRow.waitFor({ state: "visible", timeout: 5000 });
-      await expect(modalVehicleRow).toContainText(text);
-    } catch (error) {
-      console.warn(
-        "Calculation popup not found, skipping vehicle type verification",
-        error
-      );
-    }
+    await modalVehicleRow.waitFor({ state: "visible", timeout: 5000 });
+    await expect(modalVehicleRow).toContainText(text);
   }
 }

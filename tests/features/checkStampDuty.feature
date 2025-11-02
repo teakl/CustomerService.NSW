@@ -1,3 +1,4 @@
+@stampDuty
 Feature: Check Motor Vehicle Stamp Duty
 
   Scenario Outline: Verify duty calculation for a passenger vehicle
@@ -15,13 +16,11 @@ Feature: Check Motor Vehicle Stamp Duty
     | passengerOption  | vehiclePrice | expectedVehicleType| expectedPurchase| expectedDuty | 
     | Yes              | 1            | Yes                | $1.00           | $3.00        | 
     | No               | 1            | No                 | $1.00           | $3.00        | 
-    | Yes              | 10000        | Yes                | $10,000         | $300.00      | 
-    | No               | 10000        | No                 | $10,000         | $300.00      | 
+    | Yes              | 44999        | Yes                | $44,999         | $1,350.00    | 
+    | No               | 44999        | No                 | $44,999         | $1,350.00    | 
     | Yes              | 45000        | Yes                | $45,000         | $1,350.00    | 
     | No               | 45000        | No                 | $45,000         | $1,350.00    | 
+    | Yes              | 45001        | Yes                | $45,001         | $1,355.00    | 
+    | No               | 45001        | No                 | $45,001         | $1,353.00    | 
     | Yes              | 46000        | Yes                | $46,000         | $1,400.00    | 
     | No               | 46000        | No                 | $46,000         | $1,380.00    | 
-    | Yes              | 60000        | Yes                | $60,000         | $2,100.00    | 
-    | No               | 60000        | No                 | $60,000         | $1,800.00    | 
-    | Yes              | 100000       | Yes                | $100,000        | $4,100.00    | 
-    | No               | 100000       | No                 | $100,000        | $3,000.00    |
