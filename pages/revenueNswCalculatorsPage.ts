@@ -8,6 +8,7 @@ export class RevenueNswCalculatorsPage {
   readonly calculateButton: Locator;
   readonly calculateModalWindow: Locator;
   readonly revenuPanelBody: Locator;
+  readonly motorVehicleRegHeader: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,13 +19,18 @@ export class RevenueNswCalculatorsPage {
       hasText: "Calculate",
     });
     this.calculateModalWindow = page.locator(".modal-body");
-    this.revenuPanelBody = page.locator(
-      ".panel-collapse.readmore.collapse.show"
-    );
+    // this.revenuPanelBody = page.locator(
+    //   ".panel-collapse.readmore.collapse.show"
+    // );
+    this.revenuPanelBody = page.locator("#collapseTwo .panel-body");
+    this.motorVehicleRegHeader = page.locator("h2");
   }
 
   async verifyCalculatorPage() {
     await expect(this.page).toHaveURL(/revenue\.nsw\.gov\.au/);
+    await expect(this.motorVehicleRegHeader).toHaveText(
+      "Motor vehicle registration duty calculator"
+    );
     await expect(this.revenuPanelBody).toBeVisible();
   }
 
