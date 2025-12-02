@@ -9,6 +9,8 @@ export class RevenueNswCalculatorsPage {
   readonly calculateModalWindow: Locator;
   readonly revenuPanelBody: Locator;
   readonly motorVehicleRegHeader: Locator;
+  readonly passengerVehicleValidation: Locator;
+  readonly purchasePriceValidation: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,6 +26,8 @@ export class RevenueNswCalculatorsPage {
     // );
     this.revenuPanelBody = page.locator("#collapseTwo .panel-body");
     this.motorVehicleRegHeader = page.locator("h2");
+    this.passengerVehicleValidation = page.locator("#passenger_div .error");
+    this.purchasePriceValidation = page.locator("#purchaseprice_div .error");
   }
 
   async verifyCalculatorPage() {
@@ -66,5 +70,24 @@ export class RevenueNswCalculatorsPage {
 
     await modalVehicleRow.waitFor({ state: "visible", timeout: 5000 });
     await expect(modalVehicleRow).toContainText(text);
+  }
+
+  async verifyPassengerVehicleError(text: string) {
+    if (text && text.trim() !== "") {
+      await expect(this.passengerVehicleValidation).toBeVisible();
+      await expect(this.passengerVehicleValidation).toHaveText(text);
+    } else {
+      await expect(this.passengerVehicleValidation).toBeHidden(); // check it is not visible
+    }
+  }
+
+  async verifyPurchasePriceError(text: string) {
+    // await expect(this.purchasePriceValidation).toHaveText("field is required");
+    if (text && text.trim() !== "") {
+      await expect(this.purchasePriceValidation).toBeVisible();
+      await expect(this.purchasePriceValidation).toHaveText(text);
+    } else {
+      await expect(this.purchasePriceValidation).toBeHidden(); // check it is not visible
+    }
   }
 }

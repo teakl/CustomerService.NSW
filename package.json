@@ -5,7 +5,9 @@
   "scripts": {
     "test": "npx cucumber-js --format @cucumber/pretty-formatter",
     "api": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@api'",
-    "stampDuty": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@stampDuty'"
+    "stampDuty": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@stampDuty'",
+    "positive": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@positive'",
+    "negative": "npx cucumber-js --format @cucumber/pretty-formatter --tags '@negative'"
   },
   "keywords": [],
   "author": "Teak Ly",
